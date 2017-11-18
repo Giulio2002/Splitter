@@ -10,3 +10,7 @@ if it don't work do truffle init in your directory and
 
 move your files in their correct locations
 
+to interact with it use:
+  
+  *truffle console
+
