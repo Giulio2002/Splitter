@@ -12,5 +12,5 @@ move your files in their correct locations
 
 to interact with it use:
   
-  *truffle console
+  * truffle console
 
