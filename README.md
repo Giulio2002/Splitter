@@ -1,4 +1,5 @@
 # Splitter
+
 to run this project you have put all the files in a directory go with the terminal in that directory
 
 and do 
