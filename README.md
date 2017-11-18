@@ -3,8 +3,8 @@ to run this project you have put all the files in a directory go with the termin
 
 and do 
 
-* "testrpc" 
-* "truffle migrate" 
+* testrpc
+* truffle migrate 
 
 if it don't work do truffle init in your directory and
 
