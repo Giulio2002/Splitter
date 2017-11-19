@@ -135,7 +135,7 @@ contract('Splitter', function(accounts) {
             return web3.eth.getBalancePromise(bob)
                 .then(function(balance) {
 
-                     expectedBobBalance = web3.toBigNumber(balance).add(val / 2);
+                    expectedBobBalance = web3.toBigNumber(balance).add(val / 2);
 
                     return instance.split({
                         from: alice,
@@ -151,9 +151,9 @@ contract('Splitter', function(accounts) {
                     let newBobBalance = web3.toBigNumber(balance);
                     console.log(expectedBobBalance);
                     console.log(newBobBalance);
-                    assert.equal(newBobBalance.toString(10),expectedBobBalance.toString(10), "bob hasn't received the correct amount of wei");
+                    assert.equal(newBobBalance.toString(10), expectedBobBalance.toString(10), "bob hasn't received the correct amount of wei");
 
-                  })
+                })
         })
     })
 });
