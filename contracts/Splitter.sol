@@ -2,54 +2,50 @@ pragma solidity ^0.4.5;
 
 contract Splitter {
 
-    address private Owner;
-    address private Alice;
-    address private Bob;
-    address private Carol;
+    address Owner;
+    address Alice;
+    address Bob;
+    address Carol;
 
     function Splitter(address _Alice, address _Bob, address _Carol) public payable {
         Owner = msg.sender;
-        if (_Alice == address(0) || _Bob == address(0) || _Carol == address(0)) throw;
-        if (_Alice == _Bob || _Bob == _Carol || _Carol == _Alice) throw;
-        Alice = Alice;
-        Bob   = Bob;
-        Carol = Carol;
+        if (_Alice == address(0) || _Bob == address(0) || _Carol == address(0)) revert();
+        if (_Alice == _Bob || _Bob == _Carol || _Carol == _Alice) revert();
+        Alice = _Alice;
+        Bob   = _Bob;
+        Carol = _Carol;
     }
 
-    function () payable public {}
+    function () payable public {
+      revert();
+    }
 
-    function getAddress(bytes8 addressOwner) constant returns (address) {
-        if (addressOwner == 'Owner') {
-            return Owner;
-        }
-        if (addressOwner == 'Alice') {
-            return Alice;
-        }
-        if (addressOwner == 'Bob') {
-            return Bob;
-        }
-        if (addressOwner == 'Carol') {
-            return Carol;
-        } else {
-            throw;
-        }
+    function getAddresses() constant public returns (address ,address,address,address) {
+
+      return (Owner,Alice,Bob,Carol);
+
     }
 
     function split() payable public {
-        if (msg.value == 0) throw;
+        if (msg.value == 0) revert();
         if (msg.sender == Alice) {
-            if (!Bob.send(msg.value/2)) throw;
-            if (!pCarol.send(msg.value - msg.value/2)) throw;
+            if (!Bob.send(msg.value/2)) revert();
+            if (!Carol.send(msg.value - msg.value/2)) revert();
         }else
-          throw;
+          revert();
     }
 
     function killMe() public {
         if (msg.sender == Owner) {
             suicide(Owner);
         } else {
-            throw;
+            revert();
         }
+    }
+
+    function contractBalance() public returns(uint){
+
+      return this.balance;
     }
 
 }
