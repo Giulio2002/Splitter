@@ -27,7 +27,11 @@ contract Splitter {
     }
 
     function split() payable public {
+
         if (msg.value == 0) revert();
+
+        if (msg.value % 2 != 0) revert();
+
         if (msg.sender == Alice) {
             if (!Bob.send(msg.value/2)) revert();
             if (!Carol.send(msg.value - msg.value/2)) revert();

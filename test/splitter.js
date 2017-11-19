@@ -1,5 +1,6 @@
 var Splitter = artifacts.require("./Splitter.sol");
 
+
 contract('Splitter', function(accounts) {
 
     var owner = accounts[0];
@@ -31,21 +32,30 @@ contract('Splitter', function(accounts) {
 
   });
 
-  describe("Attacker verification",function(){
-  var i;
-  for(i = 0;i<500;i++){
-  it("The contract shouldn't be trapped with msg.value " + i, function() {
+  describe("Attacker verification", function() {
+      var i;
+      let bal = alice.balance;
+      for (i = 0; i < 500; i+=13) {
 
-      return instance.split.sendTransaction({from : alice, value : i}).then(function(members) {
+          it("The contract shouldn't be trapped with msg.value " + i, function() {
 
-        return instance.contractBalance.call()
+              instance.split.sendTransaction({
+                  from: alice,
+                  value: i
+              })
+              .catch(function() {
 
-      }).then(function(balance){
+                  return instance.contractBalance.call()
 
-        assert.equal(balance,0,"The contract balance isn't 0 at " + i)
-        })
+              })
+              .then(function(balance) {
+                  if (i % 2 == 0 || i == 0)
+                      assert.equal(balance.toNumber(), 0, "The contract balance is 0 at " + i)
+                  else
 
-      });
-    }
+                    if(bal > alice.balance) assert(false,"The balance is assigned correctly")
+              })
+          });
+      }
   });
 });
