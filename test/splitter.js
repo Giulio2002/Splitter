@@ -34,7 +34,7 @@ contract('Splitter', function(accounts) {
   describe("Attacker verification",function(){
   var i;
   for(i = 0;i<500;i++){
-  it("The contract shouldn't be trapped with msg.value " + i, function() {
+  it("The contract shouldn't have trapped with msg.value " + i, function() {
 
       return instance.split.sendTransaction({from : alice, value : i}).then(function(members) {
 
