@@ -104,6 +104,7 @@ contract('Splitter', function(accounts) {
                     assert(false, "split was supposed to throw but didn't.");
 
                 }).catch(function(error) {
+                  console.log(error);
                     assert.isAtLeast(error.toString().indexOf("invalid opcode"), 0);
                     assert(true, "split should throw " + error);
                 });
@@ -113,7 +114,7 @@ contract('Splitter', function(accounts) {
 
             return instance.split({
                     from: carol,
-                    value: 1
+                    value: 2
                 })
                 .then(function(txObj) {
 
@@ -121,7 +122,7 @@ contract('Splitter', function(accounts) {
 
                 }).catch(function(error) {
                     assert.isAtLeast(error.toString().indexOf("invalid opcode"), 0);
-                    assert(true, "split should throw " + error);
+                    //assert(true, "split should throw " + error);
                 });
         });
     });
