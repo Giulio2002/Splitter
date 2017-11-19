@@ -36,7 +36,7 @@ contract Splitter {
 
         Bob.transfer(msg.value/2);
 
-        Carol.transfer(msg.value - msg.value/2);
+        Carol.transfer(msg.value/2);
 
     }
 
