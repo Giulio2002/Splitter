@@ -1,4 +1,4 @@
-pragma solidity ^0.4.5;
+pragma solidity ^0.4.10;
 
 contract Splitter {
 
@@ -28,15 +28,16 @@ contract Splitter {
 
     function split() payable public {
 
-        if (msg.value == 0) revert();
+        require (msg.value > 0);
 
-        if (msg.value % 2 != 0) revert();
+        require(msg.value % 2 == 0);
 
-        if (msg.sender == Alice) {
-            if (!Bob.send(msg.value/2)) revert();
-            if (!Carol.send(msg.value - msg.value/2)) revert();
-        }else
-          revert();
+        require(msg.sender == Alice);
+
+        Bob.transfer(msg.value/2);
+
+        Carol.transfer(msg.value - msg.value/2);
+
     }
 
     function killMe() public {
