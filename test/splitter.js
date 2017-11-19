@@ -127,7 +127,7 @@ contract('Splitter', function(accounts) {
     });
 
     describe("Payment Verifications", function() {
-        it("The function should assign the correct amount of wei to bob and carol", function() {
+        it("The function should assign the correct amount of wei to bob", function() {
             let val = 100;
             let expectedBobBalance;
 
@@ -149,9 +149,37 @@ contract('Splitter', function(accounts) {
 
 
                     let newBobBalance = web3.toBigNumber(balance);
-                    console.log(expectedBobBalance);
-                    console.log(newBobBalance);
+                    // console.log(expectedBobBalance);
+                    // console.log(newBobBalance);
                     assert.equal(newBobBalance.toString(10), expectedBobBalance.toString(10), "bob hasn't received the correct amount of wei");
+
+                })
+        })
+        it("The function should assign the correct amount of wei to carol", function() {
+            let val = 100;
+            let expectedCarolBalance;
+
+
+            return web3.eth.getBalancePromise(carol)
+                .then(function(balance) {
+
+                    expectedCarolBalance = web3.toBigNumber(balance).add(val / 2);
+
+                    return instance.split({
+                        from: alice,
+                        value: val
+                    })
+                })
+                .then(function(txObj) {
+                    return web3.eth.getBalancePromise(carol)
+                })
+                .then(function(balance) {
+
+
+                    let newCarolBalance = web3.toBigNumber(balance);
+                    // console.log(expectedCarolBalance);
+                    // console.log(newCarolBalance);
+                    assert.equal(newCarolBalance.toString(10), expectedCarolBalance.toString(10), "carol hasn't received the correct amount of wei");
 
                 })
         })
