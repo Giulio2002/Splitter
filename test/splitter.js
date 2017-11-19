@@ -160,7 +160,6 @@ contract('Splitter', function(accounts) {
             let val = 100;
             let expectedCarolBalance;
 
-
             return web3.eth.getBalancePromise(carol)
                 .then(function(balance) {
 
@@ -176,10 +175,8 @@ contract('Splitter', function(accounts) {
                 })
                 .then(function(balance) {
 
-
                     let newCarolBalance = web3.toBigNumber(balance);
-                    // console.log(expectedCarolBalance);
-                    // console.log(newCarolBalance);
+
                     assert.equal(newCarolBalance.toString(10), expectedCarolBalance.toString(10), "carol hasn't received the correct amount of wei");
 
                 })
