@@ -32,17 +32,13 @@ contract('Splitter', function(accounts) {
 
   });
 
-<<<<<<< HEAD
   describe("Attacker verification", function() {
+
       var i;
+
       let bal = alice.balance;
+
       for (i = 0; i < 500; i+=13) {
-=======
-  describe("Attacker verification",function(){
-  var i;
-  for(i = 0;i<500;i++){
-  it("The contract shouldn't have trapped with msg.value " + i, function() {
->>>>>>> b3c17a4418973de8ca8969047fb17bca57aa7e6d
 
           it("The contract shouldn't be trapped with msg.value " + i, function() {
 
