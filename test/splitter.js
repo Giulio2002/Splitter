@@ -40,7 +40,7 @@ contract('Splitter', function(accounts) {
 
       for (i = 0; i < 500; i+=13) {
 
-          it("The contract shouldn't be trapped with msg.value " + i, function() {
+          it("The contract shouldn't have trapped with msg.value " + i, function() {
 
               instance.split.sendTransaction({
                   from: alice,
