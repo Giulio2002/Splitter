@@ -104,7 +104,7 @@ contract('Splitter', function(accounts) {
                     assert(false, "split was supposed to throw but didn't.");
 
                 }).catch(function(error) {
-                  console.log(error);
+                    console.log(error);
                     assert.isAtLeast(error.toString().indexOf("invalid opcode"), 0);
                     assert(true, "split should throw " + error);
                 });
@@ -132,12 +132,9 @@ contract('Splitter', function(accounts) {
             let val = 100;
             let expectedBobBalance;
 
-
             return web3.eth.getBalancePromise(bob)
                 .then(function(balance) {
-
                     expectedBobBalance = web3.toBigNumber(balance).add(val / 2);
-
                     return instance.split({
                         from: alice,
                         value: val
@@ -147,11 +144,7 @@ contract('Splitter', function(accounts) {
                     return web3.eth.getBalancePromise(bob)
                 })
                 .then(function(balance) {
-
-
                     let newBobBalance = web3.toBigNumber(balance);
-                    // console.log(expectedBobBalance);
-                    // console.log(newBobBalance);
                     assert.equal(newBobBalance.toString(10), expectedBobBalance.toString(10), "bob hasn't received the correct amount of wei");
 
                 })
@@ -176,7 +169,6 @@ contract('Splitter', function(accounts) {
                 .then(function(balance) {
 
                     let newCarolBalance = web3.toBigNumber(balance);
-
                     assert.equal(newCarolBalance.toString(10), expectedCarolBalance.toString(10), "carol hasn't received the correct amount of wei");
 
                 })
