@@ -1,4 +1,4 @@
-pragma solidity ^0.4.10;
+pragma solidity ^ 0.4 .10;
 
 contract Splitter {
 
@@ -12,31 +12,31 @@ contract Splitter {
         if (_Alice == address(0) || _Bob == address(0) || _Carol == address(0)) revert();
         if (_Alice == _Bob || _Bob == _Carol || _Carol == _Alice) revert();
         Alice = _Alice;
-        Bob   = _Bob;
+        Bob = _Bob;
         Carol = _Carol;
     }
 
-    function () payable public {
-      revert();
+    function() payable public {
+        revert();
     }
 
-    function getAddresses() constant public returns (address ,address,address,address) {
+    function getAddresses() constant public returns(address, address, address, address) {
 
-      return (Owner,Alice,Bob,Carol);
+        return (Owner, Alice, Bob, Carol);
 
     }
 
     function split() payable public {
 
-        require (msg.value > 0);
+        require(msg.value > 0);
 
         require(msg.value % 2 == 0);
 
         require(msg.sender == Alice);
 
-        Bob.transfer(msg.value/2);
+        Bob.transfer(msg.value / 2);
 
-        Carol.transfer(msg.value/2);
+        Carol.transfer(msg.value / 2);
 
     }
 
@@ -48,9 +48,9 @@ contract Splitter {
         }
     }
 
-    function contractBalance() public returns(uint){
+    function contractBalance() public returns(uint) {
 
-      return this.balance;
+        return this.balance;
     }
 
 }

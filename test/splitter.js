@@ -1,4 +1,15 @@
 var Splitter = artifacts.require("./Splitter.sol");
+import {
+    default as Promise
+} from 'bluebird';
+
+
+
+if (typeof web3.eth.getBlockPromise !== "function") {
+    Promise.promisifyAll(web3.eth, {
+        suffix: "Promise"
+    });
+}
 
 
 contract('Splitter', function(accounts) {
@@ -34,7 +45,7 @@ contract('Splitter', function(accounts) {
 
     });
 
-    describe("Attacker verification", function() {
+    describe("Security Verification", function() {
 
         var i;
 
@@ -63,10 +74,10 @@ contract('Splitter', function(accounts) {
             });
         }
     });
-    describe("Revert Test", function() {
+    describe("reevert tests", function() {
 
 
-        it("The contract should throw with msg.value: 0", function() {
+        it("The function should throw with msg.value: 0", function() {
 
             return instance.split({
                     from: alice,
@@ -82,7 +93,7 @@ contract('Splitter', function(accounts) {
                     assert(true, "split should throw " + error);
                 });
         });
-        it("The contract shouldn't have trapped with msg.value not divisible by two", function() {
+        it("The function shouldn't have trapped with msg.value not divisible by two", function() {
 
             return instance.split({
                     from: alice,
@@ -97,5 +108,52 @@ contract('Splitter', function(accounts) {
                     assert(true, "split should throw " + error);
                 });
         });
+
+        it("The function shouldn't be called from someone who isn't alice", function() {
+
+            return instance.split({
+                    from: carol,
+                    value: 1
+                })
+                .then(function(txObj) {
+
+                    assert(false, "split was supposed to throw but didn't.");
+
+                }).catch(function(error) {
+                    assert.isAtLeast(error.toString().indexOf("invalid opcode"), 0);
+                    assert(true, "split should throw " + error);
+                });
+        });
     });
+
+    describe("Payment Verifications", function() {
+        it("The function should assign the correct amount of wei to bob and carol", function() {
+            let val = 100;
+            let expectedBobBalance;
+
+
+            return web3.eth.getBalancePromise(bob)
+                .then(function(balance) {
+
+                     expectedBobBalance = web3.toBigNumber(balance).add(val / 2);
+
+                    return instance.split({
+                        from: alice,
+                        value: val
+                    })
+                })
+                .then(function(txObj) {
+                    return web3.eth.getBalancePromise(bob)
+                })
+                .then(function(balance) {
+
+
+                    let newBobBalance = web3.toBigNumber(balance);
+                    console.log(expectedBobBalance);
+                    console.log(newBobBalance);
+                    assert.equal(newBobBalance.toString(10),expectedBobBalance.toString(10), "bob hasn't received the correct amount of wei");
+
+                  })
+        })
+    })
 });
